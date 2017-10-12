@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Html.Partial("PaneContentIncludes")
+    
+   
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                   
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li><a onclick="webAuth.authorize();">Log In</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/swagger">API</a></li>
+                        <li><a href="/Account/Logout">Logout</a></li>
+                    }
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    
+<script src="http://cdn.auth0.com/js/auth0/8.7/auth0.min.js"></script>
+<script type="text/javascript">
+    var webAuth = new auth0.WebAuth({
+        domain: 'pragmapool.auth0.com',
+        clientID: 'O73yZQIwMjYCeAPPK9uhyM0iZ5z50070',
+        redirectUri: 'http://localhost:36933/LoginCallback.ashx',
+        audience: 'https://pragmapool.auth0.com/userinfo',
+        responseType: 'code',
+        scope: 'openid profile'
+    });
+
+    function signin() {
+        webAuth.authorize();
+    }
+</script></body>
+</html>

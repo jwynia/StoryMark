@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Html.Partial("PaneContentIncludes")
+   
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            background-color: #fffded;
+            font-family: Consolas;
+        }
+    </style>
+    
+    <style>
+        html,
+        body
+        {
+            height:100%;
+            margin:0;
+            padding:0;
+            overflow:hidden;
+        }
+
+        #vertical,
+        #horizontal
+        {
+            height:100%;
+            background-color: #fffded;
+        }
+
+        #vertical
+        {
+            border-width: 0;
+            background-color: #fffded;
+        }
+    </style>
+    
+    <style>
+        .menuItems {
+        
+        }
+        li.menuItem {
+            list-style-type: none;
+        }
+        li.selected {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+
+        <div id="horizontal">
+            <div>
+                <p>
+                    @RenderSection("leftnav")
+                </p>
+            </div>
+            <div style="padding: 20px;">
+                @RenderBody()
+            </div>
+            
+        </div>
+   
+<script>
+    $(function() {
+      
+
+        $("#horizontal").kendoSplitter({
+            panes: [
+                { collapsible: true, size: "25%" },
+                { collapsible: false }
+             
+            ]
+        });
+    });
+</script>
+
+</body>
+</html>

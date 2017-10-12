@@ -1,0 +1,820 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Storymark Home";
+    Layout = "~/Views/Shared/_PaneLayout.cshtml";
+}
+@section leftnav
+{
+    <div style="padding-left: 20px;">
+    <b>Storymark</b>
+    @*<ul>
+        <li><a href="/swagger">API Docs</a></li>
+        <li><a data-bind="click: addProject">Add Project</a></li>
+    </ul>*@
+       
+      
+        <ul data-bind="template: { name: 'menuItem-template', foreach: menuItems }" class="menuItems">
+        
+        </ul>
+        <div>
+            <button data-bind="click: addProject"><i class="fa fa-plus"></i> Project</button>
+        </div>
+    
+        <script type="text/html" id="menuItem-template">
+            <li class="menuItem">
+                <a data-bind="click: $root.selectMenuItem"><span data-bind="text: Title" style="cursor: pointer"></span></a>
+                @*<i class="fa fa-plus"></i>*@
+                <ul data-bind="template: { name: 'menuItem-template', foreach: ChildItems }">
+
+                </ul>
+            </li> 
+        </script>
+</div>
+}
+<div class="row" style="width: 85%">
+    <div class="col-md-12">
+        <div data-bind="if: mode() == 'Project'">
+            <form>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" data-bind="value: currentProject().Title">
+                </div>
+                <div class="form-group">
+                    <label for="project-type">Project Type</label>
+                    <input type="text" class="form-control" id="project-type" data-bind="value: currentProject().ProjectType">
+                </div>
+                <button type="submit" class="btn btn-primary" data-bind="click: $root.saveProject">Save</button>
+            </form>
+            <div style="padding-top: 20px;"><b>Project Menu</b></div>
+            <div style="padding-top: 10px;">
+                <button class="btn btn-sm btn-primary" data-bind="click: addManuscript"><i class="fa fa-plus"></i> Manuscript</button>
+                <button class="btn btn-sm btn-primary" data-bind="click: addRootFolder"><i class="fa fa-plus"></i> Root Folder</button>
+                <button class="btn btn-sm btn-primary" data-bind="click: addGlobalStoryGrid"><i class="fa fa-plus"></i> Global Story Grid</button>
+                <button class="btn btn-sm btn-primary" data-bind="click: addSubProject"><i class="fa fa-plus"></i> SubProject</button>
+            </div>
+        </div>
+        
+        <div data-bind="if: mode() == 'StoryGrid'">
+    <h3>Story Grid</h3>
+    <form>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" data-bind="value: currentStoryGrid().Title">
+    </div>
+    <div class="form-group">
+        <label for="ExternalGenre">External Genre</label>
+        <input type="text" class="form-control" id="ExternalGenre" data-bind="value: currentStoryGrid().ExternalGenre">
+    </div>
+    <div class="form-group">
+        <label for="ExternalValueAtStake">External Value At Stake</label>
+        <input type="text" class="form-control" id="ExternalValueAtStake" data-bind="value: currentStoryGrid().ExternalValueAtStake">
+    </div>
+    <div class="form-group">
+        <label for="InternalGenre">Internal Genre</label>
+        <input type="text" class="form-control" id="InternalGenre" data-bind="value: currentStoryGrid().InternalGenre">
+    </div>
+    <div class="form-group">
+        <label for="InternalValueAtStake">Internal Value At Stake</label>
+        <input type="text" class="form-control" id="InternalValueAtStake" data-bind="value: currentStoryGrid().InternalValueAtStake">
+    </div>
+    <div class="form-group">
+        <label for="ObligatoryScenesAndConventions">Obligatory Scenes And Conventions</label>
+        <input type="text" class="form-control" id="ObligatoryScenesAndConventions" data-bind="value: currentStoryGrid().ObligatoryScenesAndConventions">
+    </div>
+    <div class="form-group">
+        <label for="PointOfView">Point Of View</label>
+        <input type="text" class="form-control" id="PointOfView" data-bind="value: currentStoryGrid().PointOfView">
+    </div>
+    <div class="form-group">
+        <label for="ObjectsOfDesire">Objects Of Desire</label>
+        <input type="text" class="form-control" id="ObjectsOfDesire" data-bind="value: currentStoryGrid().ObjectsOfDesire">
+    </div>
+    <div class="form-group">
+        <label for="ControllingIdeaTheme">Controlling Idea/Theme</label>
+        <input type="text" class="form-control" id="ControllingIdeaTheme" data-bind="value: currentStoryGrid().ControllingIdeaTheme">
+    </div>
+    <h4>Beginning Hook - 15 Scenes in 5 sequences</h4>
+   
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Inciting incident" id="BeginningHook-IncitingIncident" data-bind="value: currentStoryGrid().BeginningHook.IncitingIncident.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="BeginningHook-IncitingIncident-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.IncitingIncident.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="BeginningHook-IncitingIncident-InternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.IncitingIncident.InternalCharge">
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Complication" id="BeginningHook-Complication" data-bind="value: currentStoryGrid().BeginningHook.Complication.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="BeginningHook-Complication-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.Complication.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="BeginningHook-Complication-InternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.Complication.InternalCharge">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Crisis" id="BeginningHook-Crisis" data-bind="value: currentStoryGrid().BeginningHook.Crisis.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="BeginningHook-Crisis-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.Crisis.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="BeginningHook-Crisis-InternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.Crisis.InternalCharge">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Climax" id="BeginningHook-Climax" data-bind="value: currentStoryGrid().BeginningHook.Climax.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="BeginningHook-Climax-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.Climax.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="BeginningHook-Climax-InternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.Climax.InternalCharge">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Resolution" id="BeginningHook-Resolution" data-bind="value: currentStoryGrid().BeginningHook.Resolution.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="BeginningHook-Resolution-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.Resolution.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="BeginningHook-Resolution-InternalCharge" 
+                   data-bind="value: currentStoryGrid().BeginningHook.Resolution.InternalCharge">
+        </div>
+    </div>
+    <h4>Middle Build - 30 Scenes in 5 sequences</h4>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Inciting incident" id="MiddleBuild-IncitingIncident" data-bind="value: currentStoryGrid().MiddleBuild.IncitingIncident.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="MiddleBuild-IncitingIncident-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.IncitingIncident.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="MiddleBuild-IncitingIncident-InternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.IncitingIncident.InternalCharge">
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Complication" id="MiddleBuild-Complication" data-bind="value: currentStoryGrid().MiddleBuild.Complication.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="MiddleBuild-Complication-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.Complication.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="MiddleBuild-Complication-InternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.Complication.InternalCharge">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Crisis" id="MiddleBuild-Crisis" data-bind="value: currentStoryGrid().MiddleBuild.Crisis.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="MiddleBuild-Crisis-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.Crisis.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="MiddleBuild-Crisis-InternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.Crisis.InternalCharge">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Climax" id="MiddleBuild-Climax" data-bind="value: currentStoryGrid().MiddleBuild.Climax.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="MiddleBuild-Climax-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.Climax.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="MiddleBuild-Climax-InternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.Climax.InternalCharge">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Resolution" id="MiddleBuild-Resolution" data-bind="value: currentStoryGrid().MiddleBuild.Resolution.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="MiddleBuild-Resolution-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.Resolution.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="MiddleBuild-Resolution-InternalCharge" 
+                   data-bind="value: currentStoryGrid().MiddleBuild.Resolution.InternalCharge">
+        </div>
+    </div>
+    <h4>Ending Payoff - 15 Scenes in 5 sequences</h4>
+    <i>5 most important below:</i>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Inciting incident" id="EndingPayoff-IncitingIncident" data-bind="value: currentStoryGrid().EndingPayoff.IncitingIncident.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="EndingPayoff-IncitingIncident-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.IncitingIncident.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="EndingPayoff-IncitingIncident-InternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.IncitingIncident.InternalCharge">
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Complication" id="EndingPayoff-Complication" data-bind="value: currentStoryGrid().EndingPayoff.Complication.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="EndingPayoff-Complication-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.Complication.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="EndingPayoff-Complication-InternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.Complication.InternalCharge">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Crisis" id="EndingPayoff-Crisis" data-bind="value: currentStoryGrid().EndingPayoff.Crisis.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="EndingPayoff-Crisis-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.Crisis.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="MiddleBuild-Crisis-InternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.Crisis.InternalCharge">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Climax" id="EndingPayoff-Climax" data-bind="value: currentStoryGrid().EndingPayoff.Climax.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="EndingPayoff-Climax-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.Climax.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="EndingPayoff-Climax-InternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.Climax.InternalCharge">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Resolution" id="EndingPayoff-Resolution" data-bind="value: currentStoryGrid().EndingPayoff.Resolution.Content">
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Ext Charge" 
+                   id="EndingPayoff-Resolution-ExternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.Resolution.ExternalCharge">
+        </div>
+        <div class="col-lg-1">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Int Charge" 
+                   id="EndingPayoff-Resolution-InternalCharge" 
+                   data-bind="value: currentStoryGrid().EndingPayoff.Resolution.InternalCharge">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" data-bind="click: $root.saveGlobalStoryGrid">Save</button>
+    </div>
+               
+    </form>
+    </div>
+        
+        <div data-bind="if: mode() == 'Manuscript'">
+            <h3>Manuscript</h3>
+            <form>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" data-bind="value: currentManuscript().Title">
+                </div>
+               
+                <button type="submit" class="btn btn-primary" data-bind="click: $root.saveManuscript">Save</button>
+            </form>
+            
+            <div style="padding-top: 20px;"><b>Manuscript Menu</b></div>
+            <div style="padding-top: 10px;">
+                <button class="btn btn-sm btn-primary" data-bind="click: addChapter"><i class="fa fa-plus"></i> Chapter</button>
+            </div>
+            
+            <div style="padding-top: 20px;"><b>Chapters</b></div>
+            <div data-bind="foreach: manuscriptChapters">
+                <div data-bind="text: Title"></div>
+            </div>
+        </div>
+
+        <div data-bind="if: mode() == 'Chapter'">
+            <h3>Chapter</h3>
+            <form>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" data-bind="value: currentChapter().Title">
+                </div>
+
+                <button type="submit" class="btn btn-primary" data-bind="click: $root.saveChapter">Save</button>
+            </form>
+
+            <div style="padding-top: 20px;"><b>Chapter Menu</b></div>
+            <div style="padding-top: 10px;">
+                <button class="btn btn-sm btn-primary" data-bind="click: addScene"><i class="fa fa-plus"></i> Scene</button>
+            </div>
+
+           
+        </div>
+
+        <div data-bind="if: mode() == 'Scene'">
+            <h3>Scene</h3>
+            <form>
+                <div class="form-group">
+                    <label class="radio-inline"><input type="radio" name="writingMode" data-bind="checked: sceneMode" value="Write">Write</label>
+                    <label class="radio-inline"><input type="radio" name="writingMode" data-bind="checked: sceneMode" value="Structure">Structure</label>
+                   
+                </div>
+                <div data-bind="if: sceneMode() != 'Write'">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" data-bind="value: currentScene().Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="StoryEvent">Story Event</label>
+                        <input type="text" class="form-control" id="StoryEvent" data-bind="value: currentScene().StoryEvent">
+                    </div>
+                    <div class="form-group">
+                        <label for="IncitingEvent">Inciting Event</label>
+                        <input type="text" class="form-control" id="IncitingEvent" data-bind="value: currentScene().IncitingEvent">
+                    </div>
+                    <div class="form-group">
+                        <label for="ProgressiveComplication">Progressive Complication</label>
+                        <input type="text" class="form-control" id="ProgressiveComplication" data-bind="value: currentScene().ProgressiveComplication">
+                    </div>
+                    <div class="form-group">
+                        <label for="Crisis">Crisis</label>
+                        <input type="text" class="form-control" id="Crisis" data-bind="value: currentScene().Crisis">
+                    </div>
+                    <div class="form-group">
+                        <label for="Climax">Climax</label>
+                        <input type="text" class="form-control" id="Climax" data-bind="value: currentScene().Climax">
+                    </div>
+                    <div class="form-group">
+                        <label for="Resolution">Resolution</label>
+                        <input type="text" class="form-control" id="Resolution" data-bind="value: currentScene().Resolution">
+                    </div>
+                </div>
+                <div data-bind="if: sceneMode() == 'Write'">
+                    <div class="form-group">
+                        <label for="content">Content</label>
+                        <textarea cols="80" rows="20" class="form-control" id="content" data-bind="wysiwyg: currentScene().Content"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" data-bind="click: $root.saveScene">Save</button>
+             </form>
+            <div data-bind="if: sceneMode() != 'Write'">
+                <div style="padding-top: 20px;"><b>Characters</b></div>
+                [Checkboxes of characters, ordered by mentions]
+                <div style="padding-top: 20px;"><b>Location</b></div>
+
+                <div style="padding-top: 10px;">
+                    @*<button class="btn btn-sm btn-primary" data-bind="click: addScene"><i class="fa fa-plus"></i> Scene</button>*@
+                </div>
+            </div>
+
+            </div>
+   </div>
+</div>
+
+<script>
+    ko.bindingHandlers['wysiwyg'].defaults = {
+        'plugins': ['link', 'wordcount', 'autoresize'],
+        'toolbar':
+            'undo redo |  formatselect | bold italic underline strikethrough | cut copy paste | blockquote bullist numlist | link',
+        'branding': false,
+        'menubar': false,
+        'statusbar': true,
+        'height': 600,
+        'inline': false,
+        'body_class': 'wysiwyg-editor-body'
+    };
+
+
+    function AppViewModel() {
+        var viewModel = this;
+        viewModel.mode = ko.observable("ProjectBrowse");
+        viewModel.sceneMode = ko.observable("Write");
+        viewModel.menuItems = ko.observableArray();
+        viewModel.selectedMenuItem = ko.observable();
+        viewModel.myProjects = ko.observableArray();
+        viewModel.currentProject = ko.observable();
+        viewModel.currentStoryGrid = ko.observable();
+        viewModel.currentManuscript = ko.observable();
+        viewModel.manuscriptChapters = ko.observableArray();
+        viewModel.currentChapter = ko.observable();
+        viewModel.currentScene = ko.observable();
+       
+       
+        viewModel.saveProject = function() {
+            var data = ko.mapping.toJS(viewModel.currentProject);
+            console.log(data);
+            $.post("/api/Project/Update", data)
+                .done(function (returnedData) {
+                    //console.log(returnedData);
+                    toastr.success("Project saved.");
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save project. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        }
+        viewModel.addProject = function() {
+            $.post("/api/Project/New")
+                .done(function (returnedData) {
+                    viewModel.retrieveProject(returnedData);
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save project. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        };
+        viewModel.retrieveProject = function(projectId) {
+            $.ajax({
+                url: '/api/Project/' + projectId,
+                type: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    viewModel.currentProject(new project(data));
+                    viewModel.mode("Project");
+                }
+            });
+        };
+        viewModel.selectProject = function(project) {
+            viewModel.retrieveProject(project.Id);
+        };
+
+        viewModel.retrieveMenuItems = function () {
+            $.ajax({
+                url: '/api/ProjectMenu/',
+                type: "GET",
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                    viewModel.menuItems($.map(data,
+                        function (item) {
+                            return new menuItem(item);
+                        }));
+                }
+            });
+        };
+        viewModel.selectMenuItem = function (menuItem) {
+            viewModel.selectedMenuItem(menuItem);
+            switch (menuItem.ItemType) {
+            case "Project":
+                viewModel.retrieveProject(menuItem.Id);
+                break;
+            case "Global Story Grid":
+                viewModel.retrieveGlobalStoryGrid(menuItem.Id);
+                break;
+            case "Manuscript":
+                viewModel.retrieveManuscript(menuItem.Id);
+                break;
+            case "Chapter":
+                viewModel.retrieveChapter(menuItem.Id);
+                break;
+            case "Scene":
+                viewModel.retrieveScene(menuItem.Id);
+            default:
+                console.log(menuItem);
+                break;
+            }
+        };
+
+        viewModel.addManuscript = function() {
+            $.post("/api/Manuscript/New/" + viewModel.currentProject().Id)
+                .done(function (returnedData) {
+                    viewModel.retrieveManuscript(returnedData);
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save manuscript. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        };
+        viewModel.retrieveManuscript = function (id) {
+            $.ajax({
+                url: '/api/Manuscript/' + id,
+                type: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    viewModel.currentManuscript(ko.mapping.fromJS(data));
+                    viewModel.mode("Manuscript");
+                }
+            });
+        };
+        viewModel.saveManuscript = function () {
+            var data = ko.mapping.toJS(viewModel.currentManuscript);
+            //console.log(data);
+            $.post("/api/Manuscript/Update", data)
+                .done(function (returnedData) {
+                    //console.log(returnedData);
+                    toastr.success("Manuscript saved.");
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save manuscript. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        };
+        viewModel.retrieveChaptersForManuscript = function(id) {
+            $.ajax({
+                url: '/api/ProjectMenu/AllForManuscript/' + id,
+                type: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    viewModel.manuscriptChapters($.map(data,
+                        function (item) {
+                            return new menuItem(item);
+                        }));
+                }
+            });
+        };
+        viewModel.addChapter = function () {
+            var manuscriptId = viewModel.currentManuscript().Id();
+            console.log(manuscriptId);
+            $.post("/api/NewChapter/" + manuscriptId)
+                .done(function (returnedData) {
+                    viewModel.retrieveChapter(returnedData);
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save chapter. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        };
+
+        viewModel.retrieveChapter = function (id) {
+            $.ajax({
+                url: '/api/Chapter/' + id,
+                type: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    //console.log(data);
+                    viewModel.currentChapter(ko.mapping.fromJS(data));
+                    viewModel.mode("Chapter");
+                }
+            });
+        };
+        viewModel.saveChapter = function () {
+            var data = ko.mapping.toJS(viewModel.currentChapter);
+            console.log(data);
+            $.post("/api/Chapter/" + data.Id, data)
+                .done(function (returnedData) {
+                    //console.log(returnedData);
+                    toastr.success("Chapter saved.");
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save chapter. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        }
+
+        viewModel.addScene = function () {
+            $.post("/api/NewScene/" + viewModel.currentChapter().Id())
+                .done(function (returnedData) {
+                    viewModel.retrieveScene(returnedData);
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save scene. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        };
+
+        viewModel.retrieveScene = function (id) {
+            $.ajax({
+                url: '/api/Scene/' + id,
+                type: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    viewModel.currentScene(ko.mapping.fromJS(data));
+                    viewModel.mode("Scene");
+                }
+            });
+        };
+        viewModel.saveScene = function () {
+            var data = ko.mapping.toJS(viewModel.currentScene);
+            //console.log(data);
+            $.post("/api/Scene/Update", data)
+                .done(function (returnedData) {
+                    //console.log(returnedData);
+                    toastr.success("Scene saved.");
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save scene. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        }
+
+        viewModel.addRootFolder = function () { };
+        viewModel.addGlobalStoryGrid = function() {
+            $.post("/api/GlobalStoryGrid/New/" + viewModel.currentProject().Id)
+                .done(function (returnedData) {
+                    viewModel.retrieveGlobalStoryGrid(returnedData);
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save global story grid. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        };
+        viewModel.retrieveGlobalStoryGrid = function(id) {
+            $.ajax({
+                url: '/api/GlobalStoryGrid/' + id,
+                type: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    viewModel.currentStoryGrid(ko.mapping.fromJS(data));
+                    viewModel.mode("StoryGrid");
+                }
+            });
+        };
+        viewModel.saveGlobalStoryGrid = function() {
+            var data = ko.mapping.toJS(viewModel.currentStoryGrid);
+            console.log(data);
+            $.post("/api/GlobalStoryGrid/Update", data)
+                .done(function (returnedData) {
+                    console.log(returnedData);
+                    toastr.success("Story Grid saved.");
+                    viewModel.retrieveMenuItems();
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    toastr.error("Unable to save Story Grid. DO NOT CLOSE THIS BROWSER WINDOW OR YOU WILL LOSE YOUR CHANGES.");
+                });
+        };
+        viewModel.addSubProject = function() {
+            toastr.error("Add sub-project not implemented yet. Bugger off.");
+        };
+
+        viewModel.setup = function () {
+            viewModel.retrieveMenuItems();
+        };
+        viewModel.setup();
+    }
+    function menuItem(item) {
+        this.Id = item.Id;
+        this.Title = item.Title;
+        this.ItemType = item.ItemType;
+        this.ChildItems = item.ChildItems;
+    }
+    function project(item) {
+        this.Id = item.Id;
+        this.Title = item.Title;
+        this.ProjectType = item.ProjectType;
+    }
+
+    $(function() {
+        var viewModel = new AppViewModel();
+        ko.applyBindings(viewModel);
+    });
+
+</script>
