@@ -9,19 +9,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storymark.Web", "Storymark.
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug ClientSite|Any CPU = Debug ClientSite|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{999DFA9B-81BC-49AA-B458-AF8490702FC3}.Debug ClientSite|Any CPU.ActiveCfg = Debug ClientSite|Any CPU
-		{999DFA9B-81BC-49AA-B458-AF8490702FC3}.Debug ClientSite|Any CPU.Build.0 = Debug ClientSite|Any CPU
 		{999DFA9B-81BC-49AA-B458-AF8490702FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{999DFA9B-81BC-49AA-B458-AF8490702FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{999DFA9B-81BC-49AA-B458-AF8490702FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{999DFA9B-81BC-49AA-B458-AF8490702FC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CE33DBC-B31C-4964-B443-A8F15D59D323}.Debug ClientSite|Any CPU.ActiveCfg = Debug ClientSite|Any CPU
-		{3CE33DBC-B31C-4964-B443-A8F15D59D323}.Debug ClientSite|Any CPU.Build.0 = Debug ClientSite|Any CPU
 		{3CE33DBC-B31C-4964-B443-A8F15D59D323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CE33DBC-B31C-4964-B443-A8F15D59D323}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CE33DBC-B31C-4964-B443-A8F15D59D323}.Release|Any CPU.ActiveCfg = Release|Any CPU
