@@ -4,7 +4,8 @@
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_PaneLayout.cshtml";
 }
-
+@section leftnav
+{}
 <h1>Unauthorized</h1>
 <p>Please click to log in.</p>
 <button class="btn btn-primary" onclick="webAuth.authorize();">Log In</button>

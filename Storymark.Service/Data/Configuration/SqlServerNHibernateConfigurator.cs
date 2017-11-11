@@ -22,9 +22,8 @@ namespace Storymark.Service.Data.Configuration
 			               .Database(FluentNHibernate.Cfg.Db.MsSqlConfiguration.MsSql2012
 			                                         .ConnectionString(connectionString)
 			                        )
-			               .Mappings(m =>
-				                         m.AutoMappings.Add(CreateAutomappings))
-			               .ExposeConfiguration(SetupConfiguration)
+			               .Mappings(m =>m.AutoMappings.Add(CreateAutomappings))
+                           .ExposeConfiguration(SetupConfiguration)
 			               .BuildSessionFactory();
 		}
 		static AutoPersistenceModel CreateAutomappings()
@@ -42,6 +41,7 @@ namespace Storymark.Service.Data.Configuration
 		{
 			//var resetDb = bool.Parse( ConfigurationManager.AppSettings["ResetDb"]);
 			config.IntegrateWithEnvers(new AttributeConfiguration());
+            
 			var update = new SchemaUpdate(config);
 			update.Execute(true, true);
 
