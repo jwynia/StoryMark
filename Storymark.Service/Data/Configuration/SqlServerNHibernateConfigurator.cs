@@ -40,10 +40,11 @@ namespace Storymark.Service.Data.Configuration
 		}
 		private static void SetupConfiguration(NHibernate.Cfg.Configuration config)
 		{
-			var resetDb = bool.Parse( ConfigurationManager.AppSettings["ResetDb"]);
+			//var resetDb = bool.Parse( ConfigurationManager.AppSettings["ResetDb"]);
 			config.IntegrateWithEnvers(new AttributeConfiguration());
 			var update = new SchemaUpdate(config);
-			update.Execute(LogAutoMigration, true);
+			update.Execute(true, true);
+
 			//bool clearDatabase = resetDb;
 			//var filename = DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")+".sql";
 			//new SchemaExport(config)

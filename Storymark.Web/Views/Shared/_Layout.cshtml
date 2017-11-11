@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Configuration
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -55,8 +56,8 @@
 <script type="text/javascript">
     var webAuth = new auth0.WebAuth({
         domain: 'pragmapool.auth0.com',
-        clientID: 'O73yZQIwMjYCeAPPK9uhyM0iZ5z50070',
-        redirectUri: 'http://localhost:36933/LoginCallback.ashx',
+        clientID: '@ConfigurationManager.AppSettings.Get("auth0:ClientId")',
+        redirectUri: '@ConfigurationManager.AppSettings.Get("baseUrl")/LoginCallback.ashx',
         audience: 'https://pragmapool.auth0.com/userinfo',
         responseType: 'code',
         scope: 'openid profile'
