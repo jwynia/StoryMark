@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Html2Markdown;
 using HtmlAgilityPack;
+using Markdig;
 using NHibernate;
 using NHibernate.Linq;
 using Storymark.Service.Data.Entities;
@@ -19,7 +20,14 @@ namespace Storymark.Service.Services.Scenes
 	        using (var session = _sessionFactory.OpenSession())
 	        {
 	            var scene = session.Query<Data.Entities.Scene>().FirstOrDefault(x => x.Id == id && x.Chapter.Manuscript.Project.Owner.Id == personId);
-	            return scene;
+
+	            if (scene?.Content != null)
+	            {
+	                var originalContent = scene.Content;
+	                scene.Content = Markdown.ToHtml(originalContent);
+                }
+	            
+                return scene;
 	        }
         }
 

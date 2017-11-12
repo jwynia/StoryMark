@@ -30,7 +30,13 @@
                 </ul>
             </li> 
         </script>
-</div>
+        
+        <h2>WARNING</h2>
+        <p>
+            This app is currently in development. Creating new features and fixing bugs sometimes requires that I dump the data. DO NOT make this your only copy 
+            of what you're writing. When it's stable enough to rely on, I'll adjust this message.
+        </p>
+    </div>
 }
 <div class="row" style="width: 85%">
     <div class="col-md-12">
@@ -528,7 +534,7 @@
 
 <script>
     ko.bindingHandlers['wysiwyg'].defaults = {
-        'plugins': ['link', 'wordcount', 'autoresize'],
+        'plugins': ['link', 'wordcount'],
         'toolbar':
             'undo redo |  formatselect | bold italic underline strikethrough | cut copy paste | blockquote bullist numlist | link',
         'branding': false,
